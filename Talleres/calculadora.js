@@ -1,43 +1,59 @@
-const readline = require("readline");
-
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
+const rl = require("readline").createInterface({
+    input: process.stdin,
+    output: process.stdout,
 });
 
-function calcular(operacion, num1, num2) {
-  let resultado;
-  switch (operacion) {
-    case '+':
-      resultado = num1 + num2;
-      break;
-    case '-':
-      resultado = num1 - num2;
-      break;
-    case '*':
-      resultado = num1 * num2;
-      break;
-    case '/':
-      if (num2 === 0) {
-        console.log("Error: No se permite la división por cero.");
+const preguntar = (pregunta) => {
+    return new Promise((resolve) => {
+        rl.question(pregunta, (respuesta) => resolve(respuesta));
+    });
+};
+
+const menu = async () => {
+    console.log("\n===== CALCULADORA ===== ");
+    console.log("1. Sumar");
+    console.log("2. Restar");
+    console.log("3. Multiplicar");
+    console.log("4. Dividir");
+    console.log("5. Modulo");
+    console.log("6. Raiz cuadrada");
+    console.log("7. Porcentaje");
+    console.log("5. Salir\n");
+
+    const opcion = await preguntar("Selecciona una opcion: ");
+
+    if (opcion === "5") {
+        console.log("👋 Gracias por usar la calculadora");
         rl.close();
         return;
-      }
-      resultado = num1 / num2;
-      break;
-    default:
-      console.log("Error: Operación inválida.");
-      rl.close();
-      return;
-  }
-  console.log(`${num1} ${operacion} ${num2} = ${resultado}`);
-  rl.close();
-}
+    }
 
-rl.question("Introduce el operador (+, -, *, /): ", (operacion) => {
-  rl.question("Ingresa el primer número: ", (num1) => {
-    rl.question("Ingresa el segundo número: ", (num2) => {
-      calcular(operacion, parseFloat(num1), parseFloat(num2));
-    });
-  });
-});
+    const num1 = Number(await preguntar("Ingrese el primer numero: "));
+    const num2 = Number(await preguntar("Ingrese el segundo numero: "));
+
+    switch (opcion) {
+        case "1":
+            console.log(`✅ Resultado: ${num1 + num2}`);
+            break;
+        case "2":
+            console.log(`✅ Resultado: ${num1 - num2}`);
+            break;
+        case "3":
+            console.log(`✅ Resultado: ${num1 * num2}`);
+            break;
+        case "4":
+            if (num2 !== 0) {
+                console.log(`✅ Resultado: ${num1 / num2}`);
+            } else {
+                console.log("⚠️ No se puede dividir por 0");
+            }
+            break;
+        default:
+            console.log("❌ Opcion no valida");
+            break;
+    }
+
+    menu();
+};
+
+menu();
