@@ -4,8 +4,8 @@ import { IProducts } from 'src/interfaces';
 @Injectable()
 export class ProductsService {
   private products: IProducts[] = [
-    { id: 1, name: 'Laptop', description: 'Computador portátil', price: 2500 },
-    { id: 2, name: 'Mouse', description: 'Mouse inalámbrico', price: 50 },
+    { id: 1, name: 'Laptop', description: 'Computador portátil', price: 500000 },
+    { id: 2, name: 'Mouse', description: 'Mouse inalámbrico', price: 150000 },
   ];
 
   findAll(): IProducts[] {
